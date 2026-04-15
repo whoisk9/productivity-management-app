@@ -1,0 +1,503 @@
+/* Page background */
+/*body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f8;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}*/
+:root {
+    --primary-green: #6b9f7f;
+    --accent-green: #5a8f70;
+    --light-green: #a8d5ba;
+    --soft-sage: #e8f5e9;
+    --cream: #f5f3f0;
+    --soft-white: rgba(255, 255, 255, 0.85);
+
+    --text-dark: #2f3e34;
+    --text-light: #7a8a7e;
+
+    --shadow-soft: 0 8px 25px rgba(0,0,0,0.1);
+    --shadow-subtle: 0 4px 10px rgba(0,0,0,0.05);
+
+    --transition: all 0.3s ease;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 25%, #a8d5ba 50%, #e8f5e9 75%, #f5f3f0 100%);
+    background-attachment: fixed;
+    background-size: 400% 400%;
+    animation: softGradient 15s ease infinite;
+    color: var(--text-dark);
+    min-height: 100vh;
+    line-height: 1.6;
+}
+
+@keyframes softGradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* ===========================
+   HOME PAGE STYLING
+   =========================== */
+
+.home-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.home-content {
+    text-align: center;
+    animation: fadeInDown 0.8s ease;
+}
+
+.home-content h1 {
+    font-size: 3em;
+    color: var(--primary-green);
+    margin-bottom: 20px;
+    font-weight: 300;
+    letter-spacing: 1px;
+}
+
+.home-content p {
+    font-size: 1.2em;
+    color: var(--text-light);
+    margin-bottom: 40px;
+    max-width: 500px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* ===========================
+   MAIN CONTAINER
+   =========================== */
+
+.container {
+    width: 100%;
+    max-width: 500px;
+    margin: 60px auto;
+    background: var(--soft-white);
+    padding: 50px 40px;
+    border-radius: 20px;
+    box-shadow: var(--shadow-soft);
+    backdrop-filter: blur(10px);
+    animation: slideUp 0.6s ease;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===========================
+   HEADINGS & TYPOGRAPHY
+   =========================== */
+
+h1 {
+    font-size: 2.2em;
+    color: var(--primary-green);
+    text-align: center;
+    margin-bottom: 10px;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+}
+
+h2 {
+    font-size: 1.8em;
+    color: var(--primary-green);
+    text-align: center;
+    margin-bottom: 30px;
+    font-weight: 400;
+}
+
+h3 {
+    color: var(--accent-green);
+    font-size: 1.3em;
+    margin: 25px 0 15px 0;
+    font-weight: 500;
+}
+
+p {
+    color: var(--text-light);
+    margin-bottom: 15px;
+}
+
+/* ===========================
+   FORM STYLING
+   =========================== */
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+/* ===========================
+   INPUT FIELDS
+   =========================== */
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid transparent;
+    background: var(--cream);
+    border-radius: 12px;
+    font-size: 1em;
+    color: var(--text-dark);
+    font-family: inherit;
+    transition: var(--transition);
+    outline: none;
+}
+
+input[type="text"]::placeholder,
+input[type="email"]::placeholder,
+input[type="password"]::placeholder,
+textarea::placeholder {
+    color: var(--text-light);
+    opacity: 0.7;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+textarea:focus {
+    background: #ffffff;
+    border-color: var(--primary-green);
+    box-shadow: 0 0 0 3px rgba(107, 159, 127, 0.1);
+}
+
+/* ===========================
+   BUTTONS
+   =========================== */
+
+button {
+    padding: 14px 24px;
+    border: none;
+    background: var(--primary-green);
+    color: white;
+    border-radius: 12px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: var(--shadow-subtle);
+    outline: none;
+}
+
+button:hover {
+    background: var(--accent-green);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 20px rgba(107, 159, 127, 0.2);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+button:disabled {
+    background: var(--text-light);
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* ===========================
+   LINKS & NAVIGATION
+   =========================== */
+
+a {
+    color: var(--primary-green);
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition);
+    position: relative;
+}
+
+a:hover {
+    color: var(--accent-green);
+}
+
+a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--light-green);
+    transition: var(--transition);
+}
+
+a:hover::after {
+    width: 100%;
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 30px;
+    flex-wrap: wrap;
+}
+
+.logout {
+    float: right;
+    font-size: 0.95em;
+}
+
+/* ===========================
+   TASK LIST & CARDS
+   =========================== */
+
+.tasks-header {
+    margin-top: 40px;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--soft-sage);
+}
+
+ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+li {
+    background: linear-gradient(135deg, var(--cream) 0%, #fafaf8 100%);
+    border-left: 4px solid var(--light-green);
+    padding: 16px;
+    border-radius: 12px;
+    transition: var(--transition);
+    box-shadow: var(--shadow-subtle);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 60px;
+}
+
+li:hover {
+    background: linear-gradient(135deg, #ffffff 0%, var(--cream) 100%);
+    border-left-color: var(--accent-green);
+    transform: translateX(4px);
+    box-shadow: 0 6px 16px rgba(107, 159, 127, 0.15);
+}
+
+li span {
+    flex: 1;
+    color: var(--text-dark);
+    word-break: break-word;
+}
+
+/* ===========================
+   COMPLETED TASKS
+   =========================== */
+
+.completed {
+    text-decoration: line-through;
+    color: var(--text-light);
+    opacity: 0.6;
+}
+
+li:has(.completed) {
+    border-left-color: var(--text-light);
+    background: linear-gradient(135deg, #f0f0ed 0%, #ebe9e6 100%);
+}
+
+/* ===========================
+   TASK ACTION BUTTONS
+   =========================== */
+
+.task-actions {
+    display: flex;
+    gap: 8px;
+    margin-left: 12px;
+    align-items: center;
+}
+
+li a {
+    font-size: 1.2em;
+    padding: 6px 10px;
+    border-radius: 8px;
+    transition: var(--transition);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+li a:nth-child(1) {
+    color: var(--accent-green);
+}
+
+li a:nth-child(1):hover {
+    background: rgba(90, 143, 112, 0.1);
+    color: var(--primary-green);
+}
+
+li a:nth-child(2) {
+    color: #d97757;
+}
+
+li a:nth-child(2):hover {
+    background: rgba(217, 119, 87, 0.1);
+    color: #c65a3f;
+}
+
+li a::after {
+    display: none;
+}
+
+/* ===========================
+   DASHBOARD HEADER
+   =========================== */
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.dashboard-header h1 {
+    margin: 0;
+}
+
+/* ===========================
+   ADD TASK SECTION
+   =========================== */
+
+.add-task-section {
+    background: linear-gradient(135deg, var(--soft-sage) 0%, rgba(168, 213, 186, 0.3) 100%);
+    padding: 25px;
+    border-radius: 16px;
+    margin-bottom: 30px;
+    border: 1px solid rgba(107, 159, 127, 0.2);
+}
+
+.add-task-section form {
+    margin-bottom: 0;
+}
+
+.add-task-section input {
+    background: white;
+    border-color: var(--light-green);
+}
+
+.add-task-section button {
+    background: var(--accent-green);
+}
+
+/* ===========================
+   RESPONSIVE DESIGN
+   =========================== */
+
+@media (max-width: 600px) {
+    .container {
+        margin: 40px 15px;
+        padding: 40px 25px;
+    }
+
+    h1 {
+        font-size: 1.8em;
+    }
+
+    h2 {
+        font-size: 1.5em;
+    }
+
+    .home-content h1 {
+        font-size: 2em;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    textarea {
+        padding: 12px 14px;
+    }
+
+    button {
+        padding: 12px 20px;
+    }
+
+    li {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .task-actions {
+        margin-left: 0;
+        margin-top: 12px;
+        width: 100%;
+        justify-content: flex-end;
+    }
+}
+
+/* ===========================
+   ANIMATIONS
+   =========================== */
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+button {
+    animation: fadeIn 0.6s ease;
+}
+
+li {
+    animation: fadeIn 0.4s ease;
+}
+/* ===========================
+   log in error message
+   =========================== */
+.error {
+    color: #d97757;
+    background: rgba(217, 119, 87, 0.1);
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 15px;
+}
