@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Edit Assignment</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <div class="container">
@@ -13,8 +14,10 @@
             <input type="date" name="deadline" value="{{ assignment[4] }}" required>
             <button type="submit">Update</button>
         </form>
-        
-        <a href="/dashboard">← Back</a>
+
+        <div style="text-align:center; margin-top:15px;">
+            <a href="/dashboard">← Back to Dashboard</a>
+        </div>
     </div>
 </body>   
 </html>

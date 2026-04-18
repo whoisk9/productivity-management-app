@@ -96,8 +96,20 @@ def dashboard():
     )
     due_today = cursor.fetchall()
     today = date.today()
+    #daily goals
+    cursor.execute(
+        "SELECT COUNT(*) FROM tasks WHERE user_id=%s AND status='completed'",
+        (user_id,)
+    )
+    completed_tasks = cursor.fetchone()[0]
+
+    cursor.execute(
+        "SELECT daily_goal FROM users WHERE id=%s",
+        (user_id,)
+    )
+    daily_goal = cursor.fetchone()[0]
     # pass both tasks + streak+ assignments 
-    return render_template('dashboard.html', tasks=tasks, streak=streak, assignments=assignments, due_today=due_today, today=today)
+    return render_template('dashboard.html', tasks=tasks, streak=streak, assignments=assignments, due_today=due_today, today=today, completed_tasks=completed_tasks, daily_goal=daily_goal)
 
 # ---------------- ADD TASK ----------------
 @app.route('/add_task', methods=['POST'])
