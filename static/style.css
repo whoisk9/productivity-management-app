@@ -501,3 +501,40 @@ li {
     text-align: center;
     margin-bottom: 15px;
 }
+/* ===========================
+   STREAK BADGE
+   =========================== */
+
+.streak-box {
+    text-align: center;
+    font-size: 1.3em;
+    font-weight: 600;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    color: #5a2a2a;
+    padding: 12px 20px;
+    border-radius: 25px;
+    width: fit-content;
+    margin: 0 auto 25px auto;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    animation: streakGlow 2s infinite alternate;
+}
+
+/* Glow animation */
+@keyframes streakGlow {
+    from {
+        box-shadow: 0 0 10px rgba(255, 154, 158, 0.5);
+    }
+    to {
+        box-shadow: 0 0 20px rgba(255, 154, 158, 0.9);
+    }
+}
+section {
+    margin-bottom: 40px;
+}
+.subject {
+    background: #e0f2f1;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 0.8em;
+    margin-left: 5px;
+}

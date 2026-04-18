@@ -79,9 +79,25 @@ def dashboard():
     )
     result = cursor.fetchone()
     streak = result[0] if result else 0
+    #assinments
+    cursor.execute(
+    "SELECT * FROM assignments WHERE user_id = %s ORDER BY deadline ASC",
+    (user_id,)
+    )
+    assignments = cursor.fetchall()
+    #reminder
+    from datetime import date
 
-    # pass both tasks + streak
-    return render_template('dashboard.html', tasks=tasks, streak=streak)
+    today = date.today()
+
+    cursor.execute(
+        "SELECT title FROM assignments WHERE user_id=%s AND deadline=%s",
+            (user_id, today)
+    )
+    due_today = cursor.fetchall()
+    today = date.today()
+    # pass both tasks + streak+ assignments 
+    return render_template('dashboard.html', tasks=tasks, streak=streak, assignments=assignments, due_today=due_today, today=today)
 
 # ---------------- ADD TASK ----------------
 @app.route('/add_task', methods=['POST'])
@@ -160,6 +176,64 @@ def complete_task(id):
     db.commit()
 
     return redirect('/dashboard')
+
+#----------------- ADD ASSIGNMENT ----------------
+@app.route('/add_assignment', methods=['POST'])
+def add_assignment():
+    if 'user_id' not in session:
+        return redirect('/login')
+
+    title = request.form['title']
+    subject = request.form['subject']
+    deadline = request.form['deadline']
+    user_id = session['user_id']
+
+    cursor.execute(
+        "INSERT INTO assignments (title, subject, deadline, user_id) VALUES (%s, %s, %s, %s)",
+        (title, subject, deadline, user_id)
+    )
+    db.commit()
+
+    return redirect('/dashboard')
+
+#----------------- EDIT ASSIGNMENT ----------------
+@app.route('/edit_assignment/<int:id>', methods=['GET', 'POST'])
+def edit_assignment(id):
+    if 'user_id' not in session:
+        return redirect('/login')
+
+    if request.method == 'POST':
+        deadline = request.form['deadline']
+
+        cursor.execute(
+            "UPDATE assignments SET deadline=%s WHERE id=%s",
+            (deadline, id)
+        )
+        db.commit()
+
+        return redirect('/dashboard')
+
+    cursor.execute("SELECT * FROM assignments WHERE id=%s", (id,))
+    assignment = cursor.fetchone()
+
+    return render_template('edit_assignment.html', assignment=assignment)
+
+#----------------- DELETE ASSIGNMENT ----------------
+@app.route('/delete_assignment/<int:id>')
+def delete_assignment(id):
+    if 'user_id' not in session:
+        return redirect('/login')
+
+    user_id = session['user_id']
+
+    cursor.execute(
+        "DELETE FROM assignments WHERE id=%s AND user_id=%s",
+        (id, user_id)
+    )
+    db.commit()
+
+    return redirect('/dashboard')
+
 
 # ---------------- LOGOUT ----------------
 @app.route('/logout')

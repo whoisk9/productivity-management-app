@@ -8,8 +8,14 @@
 </head>
 <body>
     <div class="container">
-        <div style="text-align:center; margin-bottom:20px;">
-            <h2>🔥 Streak: {{ streak }} days</h2>
+        {% if due_today %}
+            <div class="reminder-box">
+                ⚠️ You have {{ due_today|length }} assignment(s) due today!
+            </div>
+        {% endif %}
+        
+        <div class="streak-box">
+            🔥 {{ streak }} Day Streak
         </div>
         <div class="dashboard-header">
             <h1>Your Dashboard</h1>
@@ -30,22 +36,50 @@
 
         {% if tasks %}
             <ul>
-                {% for task in tasks %}
-                    <li>
-                        <span class="{% if task[3] == 'completed' %}completed{% endif %}">
-                            {{ task[2] }}
-                        </span>
-                        <div class="task-actions">
-                            <a href="/complete_task/{{ task[0] }}" title="Mark as complete">✔</a>
-                            <a href="/delete_task/{{ task[0] }}" title="Delete task">✕</a>
-                        </div>
-                    </li>
-                {% endfor %}
+            {% for task in tasks %}
+                <li>
+                    <span class="{% if task[3] == 'completed' %}completed{% endif %}">
+                        {{ task[2] }}
+                    </span>
+
+                    <div class="task-actions">
+                        <a href="/complete_task/{{ task[0] }}">✔</a>
+                        <a href="/delete_task/{{ task[0] }}">✕</a>
+                    </div>
+                </li>
+            {% endfor %}
+            </ul>
+            {% else %}
+                <p style="text-align:center; color:#aaa;">No tasks yet 📝</p>
+        {% endif %}
+        <h3>📚 Assignments</h3>
+
+        <form method="POST" action="/add_assignment">
+        <input type="text" name="title" placeholder="Assignment title" required>
+        <input type="text" name="subject" placeholder="Subject">
+        <input type="date" name="deadline" required>
+        <button type="submit">Add</button>
+        </form>
+
+        {% if assignments %}
+            <ul>
+            {% for a in assignments %}
+                <li>
+                    {{ a[2] }} <span class="subject">{{ a[3] }}</span> -
+
+                    {% if a[4] == today %}
+                        <span style="color:red;">Due Today!</span>
+                    {% else %}
+                        Due: {{ a[4] }}
+                    {% endif %}
+
+                    <a href="/edit_assignment/{{ a[0] }}">✏️</a>
+                    <a href="/delete_assignment/{{ a[0] }}">❌</a>
+                </li>
+            {% endfor %}
             </ul>
         {% else %}
-            <p style="text-align: center; color: #a8a8a8; padding: 40px 0;">
-                No tasks yet. Add one to get started! 🌱
-            </p>
+            <p style="text-align:center; color:#aaa;">No assignments yet 📚</p>
         {% endif %}
     </div>
 </body>
