@@ -26,6 +26,12 @@ def register():
         username = request.form['username']
         password = request.form['password']
 
+        cursor.execute("SELECT * FROM users WHERE username=%s", (username,))
+        existing = cursor.fetchone()
+
+        if existing:
+            return "Username already exists!"
+        
         cursor.execute(
             "INSERT INTO users (username, password) VALUES (%s, %s)",
             (username, password)
@@ -45,6 +51,9 @@ def login():
         username = request.form['username']
         password = request.form['password']
 
+        if not username.strip() or not password.strip():
+            error = "Fields cannot be empty"
+            return render_template('login.html', error=error)
         cursor.execute(
             "SELECT * FROM users WHERE username=%s AND password=%s",
             (username, password)
@@ -98,8 +107,8 @@ def dashboard():
     today = date.today()
     #daily goals
     cursor.execute(
-        "SELECT COUNT(*) FROM tasks WHERE user_id=%s AND status='completed'",
-        (user_id,)
+    "SELECT COUNT(*) FROM tasks WHERE user_id=%s AND status='completed' AND completed_date=%s",
+    (user_id, today)
     )
     completed_tasks = cursor.fetchone()[0]
 
@@ -117,7 +126,10 @@ def add_task():
     if 'user_id' not in session:
         return redirect('/login')
 
-    task = request.form['task']
+    task = request.form['task'].strip()
+
+    if not task:
+        return redirect('/dashboard')
     user_id = session['user_id']
 
     cursor.execute(
@@ -155,9 +167,22 @@ def complete_task(id):
     user_id = session['user_id']
 
     # mark task complete
+    today = date.today()
+
+    # 🔥 Check if already completed
     cursor.execute(
-        "UPDATE tasks SET status='completed' WHERE id=%s AND user_id=%s",
+        "SELECT status FROM tasks WHERE id=%s AND user_id=%s",
         (id, user_id)
+    )
+    task = cursor.fetchone()
+
+    if task and task[0] == 'completed':
+        return redirect('/dashboard')  # prevent double counting
+
+    # ✅ Update with date
+    cursor.execute(
+        "UPDATE tasks SET status='completed', completed_date=%s WHERE id=%s AND user_id=%s",
+        (today, id, user_id)
     )
 
     # get user streak info
@@ -195,9 +220,17 @@ def add_assignment():
     if 'user_id' not in session:
         return redirect('/login')
 
-    title = request.form['title']
+    title = request.form['title'].strip()
+
+    if not title:
+        return redirect('/dashboard')
     subject = request.form['subject']
+    from datetime import date
+
     deadline = request.form['deadline']
+
+    if deadline < str(date.today()):
+        return "Deadline cannot be in the past!"
     user_id = session['user_id']
 
     cursor.execute(

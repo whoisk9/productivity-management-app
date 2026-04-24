@@ -41,6 +41,11 @@
                         🎯 Start completing tasks to reach your daily goal!
                     {% else %}
                         🎯 Daily Goal: {{ completed_tasks }} / {{ daily_goal }}
+
+                        <!-- 🔥 ADD THIS RIGHT HERE -->
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: {{ (completed_tasks * 100 / daily_goal) if daily_goal else 0 }}%"></div>
+                        </div>
                     {% endif %}
                 </div>
             </div>
